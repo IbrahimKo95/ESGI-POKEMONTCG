@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boosters - Pokémon TCG</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6D28D9',
+                        secondary: '#9333EA',
+                        accent: '#F59E0B',
+                        surface: '#1E1B4B'
+                    },
+                    fontFamily: {
+                        pixel: ['"Press Start 2P"', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-br from-[#1e1b4b] to-[#312e81] text-white min-h-screen">
+<!-- Barre de navigation -->
+<header class="flex items-center justify-between px-6 py-4 bg-[#1f1c4c] shadow-md">
+    <h1 class="text-lg font-bold text-accent">⚡ Pokémon TCG</h1>
+    <nav class="space-x-4 text-sm">
+        <a href="index.html" class="text-blue-400 font-semibold">Boosters</a>
+        <a href="collection.html" class="hover:text-accent">Collection</a>
+        <a href="deck.html" class="hover:text-accent">Decks</a>
+        <a href="combat.html" class="hover:text-accent">Combat</a>
+    </nav>
+</header>
+
+<main class="p-6 max-w-4xl mx-auto text-center">
+    <h2 class="text-3xl font-bold mb-4">Packs de Boosters</h2>
+    <p class="text-sm text-gray-300 mb-10">Ouvre un booster toutes les 5 minutes pour obtenir 5 cartes aléatoires !</p>
+
+    <div class="bg-surface rounded-xl p-6 mb-12 shadow-lg">
+        <div class="text-yellow-400 text-4xl mb-4">📦</div>
+        <h3 class="text-lg font-semibold mb-1">Prochain booster disponible</h3>
+        <p id="timeBeforeNextBooster" class="text-3xl text-yellow-300 font-mono"></p>
+        <p class="text-xs text-gray-400 mb-4">Temps restant avant le prochain booster</p>
+        <button id="buttonOpenBooster"
+                class="mt-2 bg-yellow-500 bg-opacity-50 hover:bg-opacity-100 px-6 py-3 rounded-lg text-white font-semibold">
+            🎁 Ouvrir un booster
+        </button>
+
+        <div id="boosterCards" class="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+    </div>
+</main>
+
+<script src="./js/main.js" type="module"></script>
+</body>
+
+</html>
