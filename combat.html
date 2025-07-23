@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combat - Pokémon TCG</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6D28D9',
+                        secondary: '#9333EA',
+                        accent: '#F59E0B',
+                        surface: '#1E1B4B'
+                    },
+                    fontFamily: {
+                        pixel: ['"Press Start 2P"', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        .hp-bar {
+            height: 8px;
+            width: 100%;
+            background-color: #4c1d95;
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .hp-bar-fill {
+            height: 100%;
+            background-color: limegreen;
+            transition: width 0.5s ease;
+        }
+
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-[#1e1b4b] to-[#312e81] text-white min-h-screen">
+<header class="flex items-center justify-between px-6 py-4 bg-[#1f1c4c] shadow-md">
+    <h1 class="text-lg font-bold text-accent">⚡ Pokémon TCG</h1>
+    <nav class="space-x-4 text-sm">
+        <a href="index.html" class="hover:text-accent">Boosters</a>
+        <a href="collection.html" class="hover:text-accent">Collection</a>
+        <a href="deck.html" class=hover:text-accent">Decks</a>
+        <a href="combat.html" class="text-blue-400 font-semibold">Combat</a>
+    </nav>
+</header>
+
+<main class="p-6 max-w-6xl mx-auto text-center">
+    <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 bg-accent text-black font-semibold px-4 py-2 rounded shadow z-50 transition-opacity duration-500 opacity-0"></div>
+    <div id="persistentToast" class="hidden fixed top-16 left-1/2 -translate-x-1/2 bg-yellow-300 text-black font-semibold px-4 py-2 rounded shadow z-50"></div>
+    <h2 class="text-3xl font-bold mb-6">Combat Pokémon</h2>
+    <p class="text-sm text-gray-300 mb-8">Sélectionne ton deck pour faire des combats contre d'autres dresseurs !</p>
+
+    <div class="mb-8">
+        <select id="combatDeckSelect" class="w-full md:w-1/3 p-2 rounded bg-[#312e81] border border-gray-600 text-sm text-white">
+            <option disabled selected>Choisis ton deck</option>
+        </select>
+        <button id="startCombat" class="mt-4 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold">⚔️ Démarrer le duel</button>
+    </div>
+
+    <div class="flex flex-col md:flex-row justify-between gap-6 h-auto">
+        <div class="bg-surface p-4 rounded-lg shadow-md w-full md:w-1/3">
+            <h3 class="text-lg font-semibold mb-2">Deck du joueur</h3>
+            <div id="playerCards" class="flex flex-wrap justify-center gap-2"></div>
+        </div>
+
+        <div class="flex flex-col items-center w-full md:w-1/3">
+            <div id="battleZone" class="relative flex flex-col items-center bg-surface rounded-xl shadow-lg p-6 h-[450px]">
+                <div class="flex flex-col gap-4">
+                    <div id="botCard" class="mb-4 h-[140px]"></div>
+                    <div class="hp-bar">
+                        <div id="botHPBar" class="hp-bar-fill" style="width: 100%"></div>
+                    </div>
+                </div>
+                <div class="w-full border-t border-gray-600 my-4"></div>
+                <div class="flex flex-col gap-4">
+                    <div id="playerCard"
+                         class="w-[120px] aspect-[63/88] border-2 border-dashed border-yellow-400 flex items-center justify-center text-xs text-gray-400 rounded relative overflow-hidden transition-all">
+                        Dépose une carte
+                    </div>
+                    <div class="hp-bar">
+                        <div id="playerHPBar" class="hp-bar-fill" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-surface p-4 rounded-lg shadow-md w-full md:w-1/3">
+            <h3 class="text-lg font-semibold mb-2">Deck du bot</h3>
+            <div id="botCards" class="flex flex-wrap justify-center gap-2"></div>
+        </div>
+    </div>
+
+    <div id="combatResult" class="mt-10 text-2xl font-bold text-accent">
+
+    </div>
+    <div id="combatHistory">
+
+    </div>
+
+    <div id="combatEndModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="min-h-screen w-full flex items-center justify-center p-4">
+            <div class="bg-surface rounded-lg p-8 max-w-md w-full text-white">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold">Fin du Combat</h3>
+                    <button id="combatEndClose" class="text-gray-300 hover:text-gray-100">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="mb-6">
+                    <p id="combatEndMessage" class="text-gray-300 mb-4">Combat terminé ! Que penses-tu de cet adversaire ?</p>
+                    <div id="combatEndRating" class="flex justify-center space-x-2 text-2xl">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script type="module" src="./js/combat.js"></script>
+</body>
+
+</html>

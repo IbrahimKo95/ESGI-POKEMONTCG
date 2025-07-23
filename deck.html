@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créateur de deck - Pokémon TCG</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6D28D9',
+                        secondary: '#9333EA',
+                        accent: '#F59E0B',
+                        surface: '#1E1B4B'
+                    },
+                    fontFamily: {
+                        pixel: ['"Press Start 2P"', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-br from-[#1e1b4b] to-[#312e81] text-white min-h-screen">
+<header class="flex items-center justify-between px-6 py-4 bg-[#1f1c4c] shadow-md">
+    <h1 class="text-lg font-bold text-accent">⚡ Pokémon TCG</h1>
+    <nav class="space-x-4 text-sm">
+        <a href="index.html" class="hover:text-accent">Boosters</a>
+        <a href="collection.html" class="hover:text-accent">Collection</a>
+        <a href="deck.html" class="text-blue-400 font-semibold">Decks</a>
+        <a href="combat.html" class="hover:text-accent">Combat</a>
+    </nav>
+</header>
+
+<main class="p-6 max-w-5xl mx-auto">
+    <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 bg-accent text-black font-semibold px-4 py-2 rounded shadow z-50 transition-opacity duration-500 opacity-0"></div>
+    <div id="persistentToast" class="hidden fixed top-16 left-1/2 -translate-x-1/2 bg-yellow-300 text-black font-semibold px-4 py-2 rounded shadow z-50"></div>
+    <h2 class="text-3xl font-bold mb-4 text-center">Créateur de decks</h2>
+    <p class="text-sm text-gray-300 text-center mb-10">Créer votre propre deck pour pouvoir l'utiliser durant les combats !</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div>
+            <h3 class="text-lg font-semibold mb-3">Mes Decks</h3>
+            <div id="decksContainer" class="space-y-4 h-72 overflow-y-auto">
+            </div>
+        </div>
+
+        <div class="bg-surface p-6 rounded-xl shadow-md">
+            <h3 class="text-lg font-semibold mb-4">Créer un nouveau deck</h3>
+            <input id="deckName" type="text" placeholder="Nom du Deck" class="w-full mb-4 p-2 rounded bg-[#312e81] border border-gray-600 text-sm text-white">
+            <div id="selectedCardsContainer" class="flex flex-row gap-2 mb-4">
+                <img class="mx-auto w-full max-w-[70px] aspect-[63/88] object-cover rounded mb-2 bg-gray-700"/>
+                <img class="mx-auto w-full max-w-[70px] aspect-[63/88] object-cover rounded mb-2 bg-gray-700"/>
+                <img class="mx-auto w-full max-w-[70px] aspect-[63/88] object-cover rounded mb-2 bg-gray-700"/>
+                <img class="mx-auto w-full max-w-[70px] aspect-[63/88] object-cover rounded mb-2 bg-gray-700"/>
+                <img class="mx-auto w-full max-w-[70px] aspect-[63/88] object-cover rounded mb-2 bg-gray-700"/>
+            </div>
+            <div class="flex justify-end">
+                <button id="saveDeckButton" class="bg-accent hover:bg-yellow-400 text-black px-4 py-2 rounded-md font-semibold">
+                    Créer le deck
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="cardsContainer" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-10 h-96 overflow-y-auto">
+
+    </div>
+</main>
+
+<script src="./js/deck.js" type="module"></script>
+</body>
+
+</html>
