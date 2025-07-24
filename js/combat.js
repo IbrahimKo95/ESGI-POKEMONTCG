@@ -120,7 +120,7 @@ function displayDeck(cards, container, isPlayer = false) {
 }
 
 function setCombatCard(container, card) {
-    container.innerHTML = `<img src="${card.image}" class="card-img F object-cover rounded shadow-lg transition duration-300">`;
+    container.innerHTML = `<img src="${card.image}" class="w-[120px] aspect-[63/88] object-cover rounded shadow-lg transition duration-300">`;
 }
 
 function updateHPBars() {
